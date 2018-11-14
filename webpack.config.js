@@ -4,6 +4,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const DEV = process.argv[1].indexOf('webpack-dev-server') >= 0;
+const apiMocker = require('webpack-api-mocker');
 
 module.exports = () => {
     let srcPath = [path.resolve(__dirname, 'src')];
@@ -17,7 +18,8 @@ module.exports = () => {
         resolve: {
             modules: modulePath,
             alias: {
-                i18n: path.resolve(__dirname, 'src/i18n')
+                common: path.resolve(__dirname, 'src/common'),
+                utils: path.resolve(__dirname, 'src/utils')
             }
         },
         output: {
@@ -55,6 +57,14 @@ module.exports = () => {
                         }
                     ],
                     include: [/resources/, path.join(__dirname, 'node_modules')]
+                },
+                {
+                    test: /\.(pdf|jpg|png|gif|svg|ico)$/,
+                    use: [
+                        {
+                            loader: 'file-loader'
+                        }
+                    ]
                 }
             ]
         },
@@ -68,6 +78,9 @@ module.exports = () => {
             })
         ],
         devServer: {
+            before(app) {
+                apiMocker(app, path.resolve('./mockers/index.js'), {});
+            },
             contentBase: path.join(__dirname, 'dist'),
             compress: true,
             port: 9000
