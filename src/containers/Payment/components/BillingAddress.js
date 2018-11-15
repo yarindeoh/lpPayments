@@ -11,48 +11,52 @@ import {
 @inject('store')
 @observer
 class BillingAddress extends Component {
-    static propTypes = {};
+    static propTypes = {
+        onInputChange: PropTypes.func
+    };
 
     render() {
         const { billingAddress, getCountriesCode } = this.props.store;
         const { street, countries, selectedCountry } = billingAddress;
         const { onInputChange } = this.props;
         return (
-            <div className="billingAddress">
+            <div className="addressCont">
                 <label>Billing Address</label>
-                <Input
-                    className="street"
-                    label="Street Address"
-                    type="text"
-                    name="street"
-                    isRequired
-                    value={street}
-                    isValid={street.isValid}
-                    touched={street.touched}
-                    errorMessage={street.errorMessage}
-                    onChange={onInputChange.bind(
-                        this,
-                        'billingAddress',
-                        streetValidator
-                    )}
-                />
-                <Input
-                    className="country"
-                    label="Country"
-                    type="select"
-                    name="selectedCountry"
-                    selectOptions={countries}
-                    isRequired
-                    isValid={selectedCountry.isValid}
-                    touched={selectedCountry.touched}
-                    errorMessage={selectedCountry.errorMessage}
-                    value={selectedCountry}
-                    onChange={onInputChange.bind(
-                        this,
-                        'billingAddress',
-                        countryCodeValidator.bind(this, getCountriesCode)
-                    )}
-                />
+                <div className="billingAddress row">
+                    <Input
+                        className="street col-25"
+                        label="Street Address"
+                        type="text"
+                        name="street"
+                        isRequired
+                        value={street}
+                        isValid={street.isValid}
+                        touched={street.touched}
+                        errorMessage={street.errorMessage}
+                        onChange={onInputChange.bind(
+                            this,
+                            'billingAddress',
+                            streetValidator
+                        )}
+                    />
+                    <Input
+                        className="country col-50"
+                        label="Country"
+                        type="select"
+                        name="selectedCountry"
+                        selectOptions={countries}
+                        isRequired
+                        isValid={selectedCountry.isValid}
+                        touched={selectedCountry.touched}
+                        errorMessage={selectedCountry.errorMessage}
+                        value={selectedCountry}
+                        onChange={onInputChange.bind(
+                            this,
+                            'billingAddress',
+                            countryCodeValidator.bind(this, getCountriesCode)
+                        )}
+                    />
+                </div>
             </div>
         );
     }

@@ -15,11 +15,10 @@ const Input = ({
     errorMessage
 }) => {
     return (
-        <div className={className}>
+        <div className={className + ' inline-flex'}>
             {isRequired && <span className="required">*</span>}
             {type === 'text' && (
                 <input
-                    // className={!isValid && touched ? 'error' : 'valid'}
                     onChange={onChange}
                     required={isRequired}
                     placeholder={label}
@@ -28,7 +27,11 @@ const Input = ({
                 />
             )}
             {type === 'select' && (
-                <select onChange={onChange} name={name}>
+                <select
+                    onChange={onChange}
+                    name={name}
+                    className={!isRequired ? 'require-align' : ''}
+                >
                     {selectOptions &&
                         selectOptions.map((item, index) => (
                             <option key={'option' + index}>{item}</option>
@@ -36,7 +39,7 @@ const Input = ({
                 </select>
             )}
             {errorMessage && !isValid && touched ? (
-                <label className="errorMessage">{errorMessage}</label>
+                <label className="error-message">{errorMessage}</label>
             ) : (
                 ''
             )}

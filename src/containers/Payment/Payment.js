@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import axios from 'axios';
 import MDSpinner from 'react-md-spinner';
 
+import liveperson from 'resources/images/liveperson.png';
 import { GET_COUNTRIES } from './PaymentConstants';
 import BillingAddress from './components/BillingAddress';
 import CreditCardInfo from './components/CreditCardInfo/CreditCardInfo';
@@ -45,21 +46,28 @@ class Payment extends React.Component {
     render() {
         const { form } = this.props.store;
         return (
-            <div className="paymentContainer">
+            <div className="payment-container">
+                <img src={liveperson} />
                 {form.isLoading ? (
-                    <MDSpinner
-                        className="spinner"
-                        size={100}
-                        singleColor={'#fdd835'}
-                        borderSize={5}
-                    />
+                    <div className="payment-spinner">
+                        <MDSpinner
+                            className="spinner"
+                            size={100}
+                            singleColor={'#fdd835'}
+                            borderSize={5}
+                        />
+                    </div>
                 ) : (
                     <form onSubmit={this.onSubmitForm.bind(this)}>
-                        <h1>Secure Payment Page</h1>
+                        <div className="payment-title">Secure Payment Page</div>
                         <BillingAddress onInputChange={this.onInputChange} />
                         <CreditCardInfo onInputChange={this.onInputChange} />
-                        <button type="submit" disabled={!form.isFormValid}>
-                            Submit
+                        <button
+                            className="btn"
+                            type="submit"
+                            disabled={!form.isFormValid}
+                        >
+                            Proceed to checkout
                         </button>
                     </form>
                 )}

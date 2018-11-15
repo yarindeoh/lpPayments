@@ -1,0 +1,35 @@
+.payment-container {
+  .supported-logos{
+    height: 35px;
+    @extend .require-align;
+  }
+  .payment-title {
+    font-weight: 500;
+    font-size: $font-size-lg;
+    text-align: center ;
+  }
+
+  .credit-card-details {
+    max-height: 63px;
+  }
+
+  .card-logo {
+    img {
+      float: right;
+    }
+  }
+
+  .require-align {
+    margin-left: 8px;
+  }
+
+  .payment-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+  }
+  .addressCont {
+    padding: 20px 0;
+  }
+}

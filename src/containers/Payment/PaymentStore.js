@@ -1,46 +1,35 @@
-import { observable, action, computed, autorun } from 'mobx';
+import { observable, action, computed, autorun, extendObservable } from 'mobx';
 import {
     EXPIRATION_MOUNTS,
     EXPIRATION_YEARS,
     ERROR_MESSAGES
 } from './PaymentConstants';
 
+let PaymentObj = function(errorMessage) {
+    extendObservable(this, {
+        value: '',
+        errorMessage: errorMessage,
+        isValid: false,
+        touched: false
+    });
+};
+
 class PaymentStore {
     @observable billingAddress = {
         countries: [],
         countriesCode: [],
-        street: {
-            value: '',
-            isValid: false,
-            touched: false,
-            errorMessage: ERROR_MESSAGES.selectedCountry
-        },
-        selectedCountry: {
-            value: '',
-            isValid: false,
-            touched: false,
-            errorMessage: ERROR_MESSAGES.selectedCountry
-        }
+        street: new PaymentObj(ERROR_MESSAGES.street),
+        selectedCountry: new PaymentObj(ERROR_MESSAGES.selectedCountry)
     };
     @observable creditCardInfo = {
-        number: {
-            value: '',
-            isValid: false,
-            touched: false,
-            errorMessage: ERROR_MESSAGES.number
-        },
-        cvv: {
-            value: '',
-            isValid: false,
-            touched: false,
-            errorMessage: ERROR_MESSAGES.cvv
-        },
+        number: new PaymentObj(ERROR_MESSAGES.number),
+        cvv: new PaymentObj(ERROR_MESSAGES.cvv),
         expirationDate: {
             month: EXPIRATION_MOUNTS[0],
             year: EXPIRATION_YEARS[0],
+            errorMessage: ERROR_MESSAGES.expirationDate,
             isValid: true,
-            touched: false,
-            errorMessage: ERROR_MESSAGES.expirationDate
+            touched: false
         }
     };
     @observable form = {
@@ -115,7 +104,7 @@ class PaymentStore {
 const store = new PaymentStore();
 
 /**
- * Update form validation property according
+ * Update form isValid property according
  * to live form validations
  */
 autorun(() => {
@@ -124,7 +113,9 @@ autorun(() => {
     let validation = [];
 
     for (let item in creditCardInfo) {
-        validation.push(creditCardInfo[item].isValid);
+        if (creditCardInfo.hasOwnProperty(item)) {
+            validation.push(creditCardInfo[item].isValid);
+        }
     }
     validation.push(billingAddress.street.isValid);
     validation.push(billingAddress.selectedCountry.isValid);

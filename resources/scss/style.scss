@@ -1,2 +1,6 @@
+@import "_fonts";
+@import "_variables";
 @import "layout";
-@import "features/_paymentView";
+@import "_base";
+@import "features/_payment";
+@import "features/_successPage";

@@ -1,0 +1,19 @@
+.success {
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
+  //height: 100vh;
+
+  img {
+    width: 100px;
+    display: block;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 80px;
+  }
+
+  h1, h3 {
+    text-align: center;
+  }
+}

@@ -3,14 +3,20 @@ import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 
 import ExpirationDate from './ExpirationDate';
-import { cvvValidator, creditCardValidator } from 'src/containers/Payment/helpers/validators';
+import {
+    cvvValidator,
+    creditCardValidator
+} from 'src/containers/Payment/helpers/validators';
 import Input from 'common/Input';
 import CreditCardLogo from './CreditCardLogo';
+import supportedCards from 'resources/images/creditcards-sprite.png';
 
 @inject('store')
 @observer
 class CreditCardInfo extends Component {
-    static propTypes = {};
+    static propTypes = {
+        onInputChange: PropTypes.func
+    };
 
     render() {
         const { creditCardInfo } = this.props.store;
@@ -18,10 +24,11 @@ class CreditCardInfo extends Component {
         const { onInputChange } = this.props;
         return (
             <div>
-                <div className="creditCardInfo">
-                    <label>Credit Card Details</label>
+                <label>Credit Card Details</label>
+                <img className="supported-logos" src={supportedCards} />
+                <div className="creditCardInfo row">
                     <Input
-                        className="creditCardNumber"
+                        className="creditCardNumber col-75"
                         label="Credit Card Number"
                         type="text"
                         name="number"
@@ -36,11 +43,17 @@ class CreditCardInfo extends Component {
                             creditCardValidator
                         )}
                     />
-                    <CreditCardLogo cardNumber={number.value} />
+                    <div className="card-logo col-1">
+                        <CreditCardLogo cardNumber={number.value} />
+                    </div>
                 </div>
-                <div className="creditCardDetails">
+                <div className="credit-card-details row">
+                    <ExpirationDate
+                        expirationDate={expirationDate}
+                        onInputChange={onInputChange}
+                    />
                     <Input
-                        className="cvv"
+                        className="cvv col-25"
                         label="CVV"
                         type="text"
                         name="cvv"
@@ -54,10 +67,6 @@ class CreditCardInfo extends Component {
                             'creditCardInfo',
                             cvvValidator
                         )}
-                    />
-                    <ExpirationDate
-                        expirationDate={expirationDate}
-                        onInputChange={onInputChange}
                     />
                 </div>
             </div>

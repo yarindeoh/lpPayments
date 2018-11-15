@@ -17,13 +17,13 @@ class CreditCardLogo extends Component {
         const path = cardTypeHelper(cardNumber);
         switch (path) {
             case 'visa':
-                return <img src={visa} />;
+                return <img className="logoImage" src={visa} />;
             case 'amex':
-                return <img src={amex} />;
+                return <img className="logoImage" src={amex} />;
             case 'mastercard':
-                return <img src={mastercard} />;
+                return <img className="" src={mastercard} />;
         }
-        return <img src={lock} />;
+        return <img className="logoImage" src={lock} />;
     }
 }
 

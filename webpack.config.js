@@ -59,10 +59,11 @@ module.exports = () => {
                     include: [/resources/, path.join(__dirname, 'node_modules')]
                 },
                 {
-                    test: /\.(pdf|jpg|png|gif|svg|ico)$/,
+                    test: /\.(jpg|png|gif|svg|ico|ttf|woff|woff2)(\?.*)?$/,
                     use: [
                         {
-                            loader: 'file-loader'
+                            loader: 'file-loader',
+                            options: {}
                         }
                     ]
                 }

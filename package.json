@@ -1,7 +1,7 @@
 {
 	"name": "lpPayments",
 	"scripts": {
-		"dev": "webpack-dev-server",
+		"dev": "webpack-dev-server --host 0.0.0.0",
 		"build": "webpack",
 		"test": "jest",
 		"test-dev": "jest --watch",
