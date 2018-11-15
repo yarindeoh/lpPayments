@@ -6,7 +6,7 @@ A single page application for sending validated payments to a payment proccessin
 Run in locally - webpack-dev-server
 
 ```
-yarn start
+yarn dev
 ```
 
 Run tests / test
