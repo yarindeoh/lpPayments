@@ -16,6 +16,7 @@
 		"mobx": "^5.6.0",
 		"mobx-react": "^5.3.6",
 		"mobx-react-router": "^4.0.5",
+		"mobx-state-tree": "^3.7.1",
 		"prettier": "^1.15.2",
 		"prop-types": "^15.6.2",
 		"react": "^16.2.0",
