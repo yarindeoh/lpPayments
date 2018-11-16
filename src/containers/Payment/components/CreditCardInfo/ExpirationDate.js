@@ -1,5 +1,5 @@
 import React from 'react';
-import Input from 'common/Input';
+import Input from 'common/components/Input';
 import { observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 

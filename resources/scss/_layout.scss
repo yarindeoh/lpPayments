@@ -1,12 +1,12 @@
 * {
   box-sizing: border-box;
+  font-family: "MyriadPro-Light";
 }
 
 body {
   padding: 8px;
   font-size: $font-size-md;
   background-color: $silver;
-  font-family: "MyriadPro-Light";
 }
 
 .row {
@@ -49,18 +49,23 @@ body {
 
 /* Responsive layout - when screen is less then 600px, show in separate rows*/
 @media (max-width: 600px) {
-  .col-50, .col-10 {
-    flex: 75%;
-  }
-  .col-25 {
-    margin-bottom: 20px;
-    flex: 75%;
-  }
-  button.btn {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  .payment-container {
+    .col-50, .col-10 {
+      flex: 75%;
+    }
+    .col-25 {
+      margin-bottom: 20px;
+      flex: 75%;
+    }
+    .creditCardInfo {
+      height: 70vh;
+    }
+    button {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
   }
 }
 

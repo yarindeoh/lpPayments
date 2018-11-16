@@ -1,4 +1,4 @@
-import { isUndefined, isEmptyString, isNumber } from 'utils/helpers';
+import { isUndefined, isEmptyString, isNumber } from 'common/utils/helpers';
 
 const CURRENT_YEAR = new Date().getFullYear();
 const CURRENT_MONTH = new Date().getMonth() + 1;
@@ -15,8 +15,14 @@ export function streetValidator(street) {
  * @returns {boolean}
  */
 export function countryCodeValidator(codes, selectedCountry) {
-    const codeName = selectedCountry.split('-')[1].trim();
-    return isUndefined(codeName) && Object.values(codes).includes(codeName);
+    const codeName = selectedCountry.includes('-')
+        ? selectedCountry.split('-')[1].trim()
+        : '';
+    return (
+        !isEmptyString(codeName) &&
+        isUndefined(codeName) &&
+        Object.values(codes).includes(codeName)
+    );
 }
 
 //todo:: add number validation

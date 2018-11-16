@@ -24,15 +24,30 @@ class Payment extends React.Component {
 
     async onSubmitForm(e) {
         e.preventDefault();
-        this.props.store.form.isLoading = true;
+        const serverParams = this.prepareServerParams();
         try {
-            await axios.get('/api/test');
+            this.props.store.form.isLoading = true;
+            await axios.post('/api/payment', serverParams);
             this.props.routing.push('/success');
         } catch (e) {
             this.props.routing.push('/error');
         }
         this.props.store.form.isLoading = false;
     }
+
+    prepareServerParams = () => {
+        const { billingAddress, creditCardInfo } = this.props.store;
+        return {
+            address: billingAddress.street.value,
+            country: billingAddress.selectedCountry.value,
+            cvv: creditCardInfo.cvv.value,
+            cardNumber: creditCardInfo.number.value,
+            expirationDate: {
+                year: creditCardInfo.expirationDate.year,
+                month: creditCardInfo.expirationDate.month
+            }
+        };
+    };
 
     async componentDidMount() {
         try {
@@ -62,11 +77,7 @@ class Payment extends React.Component {
                         <div className="payment-title">Secure Payment Page</div>
                         <BillingAddress onInputChange={this.onInputChange} />
                         <CreditCardInfo onInputChange={this.onInputChange} />
-                        <button
-                            className="btn"
-                            type="submit"
-                            disabled={!form.isFormValid}
-                        >
+                        <button type="submit" disabled={!form.isFormValid}>
                             Proceed to checkout
                         </button>
                     </form>

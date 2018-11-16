@@ -38,6 +38,11 @@ class PaymentStore {
         isLoading: false
     };
 
+    @computed
+    get getBillingAddress() {
+        return this.billingAddress;
+    }
+
     /**
      * Updating property in the store
      * and managing inner store obj

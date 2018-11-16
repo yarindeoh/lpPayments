@@ -2,24 +2,23 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { DefinePlugin } = require('webpack');
-const DEV = process.argv[1].indexOf('webpack-dev-server') >= 0;
 const apiMocker = require('webpack-api-mocker');
 
-module.exports = () => {
+module.exports = (env, argv) => {
     let srcPath = [path.resolve(__dirname, 'src')];
     let modulePath = [path.resolve('.'), path.join(__dirname, 'node_modules')];
 
     let webpackConfig = {
         performance: { hints: false },
-        mode: DEV ? 'development' : 'production',
-        entry: __dirname + '/src/index.js',
-        devtool: DEV ? 'eval-source-map' : 'none',
+        mode: argv.mode,
+        entry: path.resolve(__dirname, 'src/index.js'),
+        devtool: argv.mode === 'development' ? 'eval-source-map' : 'none',
         resolve: {
             modules: modulePath,
             alias: {
                 common: path.resolve(__dirname, 'src/common'),
-                utils: path.resolve(__dirname, 'src/utils')
+                utils: path.resolve(__dirname, 'src/utils'),
+                src: path.resolve(__dirname, 'src')
             }
         },
         output: {
@@ -70,12 +69,9 @@ module.exports = () => {
             ]
         },
         plugins: [
-            new DefinePlugin({
-                DEBUG: DEV === true
-            }),
             new HtmlWebpackPlugin({
                 filename: 'index.html',
-                template: __dirname + '/index.html'
+                template: path.resolve(__dirname, 'index.html')
             })
         ],
         devServer: {

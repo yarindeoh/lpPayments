@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 
-import Input from 'common/Input';
+import Input from 'common/components/Input';
 import {
     countryCodeValidator,
     streetValidator
@@ -16,8 +16,12 @@ class BillingAddress extends Component {
     };
 
     render() {
-        const { billingAddress, getCountriesCode } = this.props.store;
-        const { street, countries, selectedCountry } = billingAddress;
+        const { getCountriesCode } = this.props.store;
+        const {
+            street,
+            countries,
+            selectedCountry
+        } = this.props.store.billingAddress;
         const { onInputChange } = this.props;
         return (
             <div className="addressCont">
@@ -45,6 +49,7 @@ class BillingAddress extends Component {
                         type="select"
                         name="selectedCountry"
                         selectOptions={countries}
+                        selectFirst
                         isRequired
                         isValid={selectedCountry.isValid}
                         touched={selectedCountry.touched}

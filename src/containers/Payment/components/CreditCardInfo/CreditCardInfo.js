@@ -7,7 +7,7 @@ import {
     cvvValidator,
     creditCardValidator
 } from 'src/containers/Payment/helpers/validators';
-import Input from 'common/Input';
+import Input from 'common/components/Input';
 import CreditCardLogo from './CreditCardLogo';
 import supportedCards from 'resources/images/creditcards-sprite.png';
 
@@ -19,14 +19,13 @@ class CreditCardInfo extends Component {
     };
 
     render() {
-        const { creditCardInfo } = this.props.store;
-        const { number, cvv, expirationDate } = creditCardInfo;
+        const { number, cvv, expirationDate } = this.props.store.creditCardInfo;
         const { onInputChange } = this.props;
         return (
-            <div>
+            <div className="creditCardInfo">
                 <label>Credit Card Details</label>
                 <img className="supported-logos" src={supportedCards} />
-                <div className="creditCardInfo row">
+                <div className="row">
                     <Input
                         className="creditCardNumber col-75"
                         label="Credit Card Number"

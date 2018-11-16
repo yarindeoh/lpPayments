@@ -12,13 +12,15 @@ const Input = ({
     value,
     isValid,
     touched,
-    errorMessage
+    errorMessage,
+    selectFirst
 }) => {
     return (
         <div className={className + ' inline-flex'}>
             {isRequired && <span className="required">*</span>}
             {type === 'text' && (
                 <input
+                    autoComplete="off"
                     onChange={onChange}
                     required={isRequired}
                     placeholder={label}
@@ -32,6 +34,11 @@ const Input = ({
                     name={name}
                     className={!isRequired ? 'require-align' : ''}
                 >
+                    {selectFirst && (
+                        <option key="firstOption" defaultValue={'firstOption'}>
+                            Select...
+                        </option>
+                    )}
                     {selectOptions &&
                         selectOptions.map((item, index) => (
                             <option key={'option' + index}>{item}</option>
@@ -56,7 +63,8 @@ Input.propTypes = {
     selectOptions: PropTypes.array,
     name: PropTypes.string,
     value: PropTypes.object,
-    touched: PropTypes.bool
+    touched: PropTypes.bool,
+    selectFirst: PropTypes.bool
 };
 
 export default Input;
