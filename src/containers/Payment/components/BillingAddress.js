@@ -8,20 +8,28 @@ import {
     streetValidator
 } from 'src/containers/Payment/helpers/validators';
 
-@inject('store')
 @observer
 class BillingAddress extends Component {
     static propTypes = {
         onInputChange: PropTypes.func
     };
 
+    getCountries = name => {
+        const codeArray = [];
+        const { countriesCode } = this.props.billingAddress;
+        const countriesObj = countriesCode.getCountriesCode();
+        for (let key in countriesObj) {
+            if (countriesObj.hasOwnProperty(key)) {
+                codeArray.push(countriesObj[key][name]);
+            }
+        }
+        return codeArray;
+    };
+
     render() {
-        const { getCountriesCode } = this.props.store;
-        const {
-            street,
-            countries,
-            selectedCountry
-        } = this.props.store.billingAddress;
+        const { street, selectedCountry } = this.props.billingAddress;
+        const countries = this.getCountries('displayName');
+        const codes = this.getCountries('countryCode');
         const { onInputChange } = this.props;
         return (
             <div className="addressCont">
@@ -58,7 +66,7 @@ class BillingAddress extends Component {
                         onChange={onInputChange.bind(
                             this,
                             'billingAddress',
-                            countryCodeValidator.bind(this, getCountriesCode)
+                            countryCodeValidator.bind(this, codes)
                         )}
                     />
                 </div>

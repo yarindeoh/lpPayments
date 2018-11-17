@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { observer, inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 
 import ExpirationDate from './ExpirationDate';
 import {
@@ -11,7 +11,6 @@ import Input from 'common/components/Input';
 import CreditCardLogo from './CreditCardLogo';
 import supportedCards from 'resources/images/creditcards-sprite.png';
 
-@inject('store')
 @observer
 class CreditCardInfo extends Component {
     static propTypes = {
@@ -19,7 +18,7 @@ class CreditCardInfo extends Component {
     };
 
     render() {
-        const { number, cvv, expirationDate } = this.props.store.creditCardInfo;
+        const { number, cvv, expirationDate } = this.props.creditCardInfo;
         const { onInputChange } = this.props;
         return (
             <div className="creditCardInfo">
