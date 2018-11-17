@@ -40,6 +40,8 @@ The application allow users to insert their billing address and credit card info
  After submission, a request is being send to a delayed mock server using webpack-api-mocker and being transferred to a success page.
  (there also an error page which will be returned (ready for future use) when the server is returning errors)
  
+ **MST branch is in ongoing development and refactoring. 
+ 
 ## Technical stack
 - React
 - Mobx
