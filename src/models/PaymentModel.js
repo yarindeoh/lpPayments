@@ -1,7 +1,10 @@
 import { types } from 'mobx-state-tree';
+import axios from 'axios';
+
 import BillingAddress from './BillingAddress';
 import CreditCardInfo from './CreditCardInfo';
 import PaymentForm from './PaymentForm';
+import { GET_COUNTRIES } from '../containers/Payment/PaymentConstants';
 
 const PaymentModel = types
     .model({
@@ -10,6 +13,16 @@ const PaymentModel = types
         form: types.optional(PaymentForm, {})
     })
     .actions(self => ({
+        getCountries() {
+            axios
+                .get(GET_COUNTRIES)
+                .then(response => {
+                    self.billingAddress.countriesCode.setCountries(
+                        response.data.geonames
+                    );
+                })
+                .catch(e => console.log(e));
+        },
         checkValidity() {
             const { creditCardInfo, billingAddress } = self;
             let isFormValid;

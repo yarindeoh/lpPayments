@@ -20,13 +20,6 @@ const CountriesCode = types
                 countryCode: item.countryCode,
                 displayName: item.countryName + ' - ' + item.countryCode
             });
-        },
-        getCountriesCode2() {
-            const codeArray = [];
-            for (let item in self.items) {
-                codeArray.push(item.displayName);
-            }
-            return codeArray;
         }
     }))
     .views(self => ({

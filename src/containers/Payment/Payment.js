@@ -48,17 +48,8 @@ class Payment extends React.Component {
         return this.props.store.payment.getServerData;
     };
 
-    //TODO:: remove fetch request to MST model
-    async componentDidMount() {
-        try {
-            const { data } = await axios(GET_COUNTRIES);
-            const { geonames } = data;
-            this.props.store.payment.billingAddress.countriesCode.setCountries(
-                geonames
-            );
-        } catch (e) {
-            console.error(e);
-        }
+    componentDidMount() {
+        this.props.store.payment.getCountries();
     }
     render() {
         const {
