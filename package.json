@@ -13,14 +13,14 @@
 		"jest": "^23.6.0",
 		"mobx": "^5.6.0",
 		"mobx-react": "^5.3.6",
-		"mobx-react-router": "^4.0.5",
 		"mobx-state-tree": "^3.7.1",
+		"mst-react-router": "^2.1.0",
 		"prettier": "^1.15.2",
 		"prop-types": "^15.6.2",
 		"react": "^16.2.0",
 		"react-dom": "^16.3.2",
 		"react-md-spinner": "^0.3.0",
-		"react-router-dom": "^4.3.1",
+		"react-router": "^4.3.1",
 		"webpack-api-mocker": "^1.5.16"
 	},
 	"devDependencies": {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import axios from 'axios';
 import MDSpinner from 'react-md-spinner';
 
@@ -8,6 +8,7 @@ import { GET_COUNTRIES } from './PaymentConstants';
 import BillingAddress from './components/BillingAddress';
 import CreditCardInfo from './components/CreditCardInfo/CreditCardInfo';
 
+@inject('store')
 @observer
 class Payment extends React.Component {
     onInputChange = (base, validFunc, event) => {
@@ -16,7 +17,7 @@ class Payment extends React.Component {
     };
 
     updateStoreProperty = (base, name, value, validFunc) => {
-        const { payment } = this.props;
+        const { payment } = this.props.store;
         if (typeof base !== 'string') {
             let primaryBase = base[0];
             let secondaryBase = base[1];
@@ -33,21 +34,18 @@ class Payment extends React.Component {
     async onSubmitForm(e) {
         e.preventDefault();
         const serverParams = this.prepareServerParams();
-        console.log(serverParams);
-        this.props.payment.form.updateLoadingState(true);
-
-        // try {
-        //     this.props.store.form.isLoading = true;
-        //     await axios.post('/api/payment', serverParams);
-        //     this.props.routing.push('/success');
-        // } catch (e) {
-        //     this.props.routing.push('/error');
-        // }
-        // this.props.payment.form.updateLoadingState(false);
+        try {
+            this.props.store.payment.form.updateLoadingState(true);
+            await axios.post('/api/payment', serverParams);
+            this.props.store.routing.push('/success');
+        } catch (e) {
+            this.props.store.routing.push('/error');
+        }
+        this.props.store.payment.form.updateLoadingState(false);
     }
 
     prepareServerParams = () => {
-        return this.props.payment.getServerData;
+        return this.props.store.payment.getServerData;
     };
 
     //TODO:: remove fetch request to MST model
@@ -55,7 +53,7 @@ class Payment extends React.Component {
         try {
             const { data } = await axios(GET_COUNTRIES);
             const { geonames } = data;
-            this.props.payment.billingAddress.countriesCode.setCountries(
+            this.props.store.payment.billingAddress.countriesCode.setCountries(
                 geonames
             );
         } catch (e) {
@@ -63,7 +61,11 @@ class Payment extends React.Component {
         }
     }
     render() {
-        const { billingAddress, creditCardInfo, form } = this.props.payment;
+        const {
+            billingAddress,
+            creditCardInfo,
+            form
+        } = this.props.store.payment;
         return (
             <div className="payment-container">
                 <img src={liveperson} />
