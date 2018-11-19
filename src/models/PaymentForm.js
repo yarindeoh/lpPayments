@@ -9,6 +9,9 @@ const PaymentForm = types
     .actions(self => ({
         updateFormValidity(isValid) {
             self.isFormValid = isValid;
+        },
+        updateLoadingState(isLoading) {
+            self.isLoading = isLoading;
         }
     }));
 

@@ -5,7 +5,7 @@ const FormInput = types
         value: types.optional(types.string, ''),
         isValid: false,
         touched: false,
-        errorMessage: types.string
+        errorMessage: types.optional(types.string, '')
     })
     .actions(self => ({
         updateProperty(value, validFunc) {
@@ -17,5 +17,4 @@ const FormInput = types
             return self.isValid;
         }
     }));
-
 export default FormInput;

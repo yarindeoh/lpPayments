@@ -33,28 +33,21 @@ class Payment extends React.Component {
     async onSubmitForm(e) {
         e.preventDefault();
         const serverParams = this.prepareServerParams();
-        try {
-            this.props.store.form.isLoading = true;
-            await axios.post('/api/payment', serverParams);
-            this.props.routing.push('/success');
-        } catch (e) {
-            this.props.routing.push('/error');
-        }
-        this.props.store.form.isLoading = false;
+        console.log(serverParams);
+        this.props.payment.form.updateLoadingState(true);
+
+        // try {
+        //     this.props.store.form.isLoading = true;
+        //     await axios.post('/api/payment', serverParams);
+        //     this.props.routing.push('/success');
+        // } catch (e) {
+        //     this.props.routing.push('/error');
+        // }
+        // this.props.payment.form.updateLoadingState(false);
     }
 
     prepareServerParams = () => {
-        const { billingAddress, creditCardInfo } = this.props.store;
-        return {
-            address: billingAddress.street.value,
-            country: billingAddress.selectedCountry.value,
-            cvv: creditCardInfo.cvv.value,
-            cardNumber: creditCardInfo.number.value,
-            expirationDate: {
-                year: creditCardInfo.expirationDate.year,
-                month: creditCardInfo.expirationDate.month
-            }
-        };
+        return this.props.payment.getServerData;
     };
 
     //TODO:: remove fetch request to MST model
@@ -70,35 +63,35 @@ class Payment extends React.Component {
         }
     }
     render() {
-        // const { form } = this.props.store;
-        const { billingAddress, creditCardInfo } = this.props.payment;
+        const { billingAddress, creditCardInfo, form } = this.props.payment;
         return (
             <div className="payment-container">
                 <img src={liveperson} />
-                {/*TODO:: support form check validation and spinner*/}
-                {/*{form.isLoading ? (*/}
-                {/*<div className="payment-spinner">*/}
-                {/*<MDSpinner*/}
-                {/*className="spinner"*/}
-                {/*size={100}*/}
-                {/*singleColor={'#fdd835'}*/}
-                {/*borderSize={5}*/}
-                {/*/>*/}
-                {/*</div>*/}
-                {/*) : (*/}
-                <form onSubmit={this.onSubmitForm.bind(this)}>
-                    <div className="payment-title">Secure Payment Page</div>
-                    <BillingAddress
-                        billingAddress={billingAddress}
-                        onInputChange={this.onInputChange}
-                    />
-                    <CreditCardInfo
-                        creditCardInfo={creditCardInfo}
-                        onInputChange={this.onInputChange}
-                    />
-                    <button type="submit">Proceed to checkout</button>
-                </form>
-                {/*)}*/}
+                {form.isLoading ? (
+                    <div className="payment-spinner">
+                        <MDSpinner
+                            className="spinner"
+                            size={100}
+                            singleColor={'#fdd835'}
+                            borderSize={5}
+                        />
+                    </div>
+                ) : (
+                    <form onSubmit={this.onSubmitForm.bind(this)}>
+                        <div className="payment-title">Secure Payment Page</div>
+                        <BillingAddress
+                            billingAddress={billingAddress}
+                            onInputChange={this.onInputChange}
+                        />
+                        <CreditCardInfo
+                            creditCardInfo={creditCardInfo}
+                            onInputChange={this.onInputChange}
+                        />
+                        <button type="submit" disabled={!form.isFormValid}>
+                            Proceed to checkout
+                        </button>
+                    </form>
+                )}
             </div>
         );
     }

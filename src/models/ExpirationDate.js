@@ -8,7 +8,7 @@ const ExpirationDate = types
     .model('ExpirationDate', {
         year: EXPIRATION_YEARS[0],
         month: EXPIRATION_MOUNTS[0],
-        isValid: false,
+        isValid: true,
         touched: false,
         errorMessage: types.string
     })
