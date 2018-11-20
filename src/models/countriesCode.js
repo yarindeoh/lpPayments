@@ -24,7 +24,10 @@ const CountriesCode = types
     }))
     .views(self => ({
         getCountriesCode() {
-            return self.items.filter(item => item.displayName);
+            return self.items.map(item => item.countryCode);
+        },
+        getCountryDisplayName() {
+            return self.items.map(item => item.displayName);
         }
     }));
 export default CountriesCode;

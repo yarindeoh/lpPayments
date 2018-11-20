@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree';
+import { types, getSnapshot } from 'mobx-state-tree';
 import axios from 'axios';
 
 import BillingAddress from './BillingAddress';
@@ -13,7 +13,7 @@ const PaymentModel = types
         form: types.optional(PaymentForm, {})
     })
     .actions(self => ({
-        getCountries() {
+        afterCreate() {
             axios
                 .get(GET_COUNTRIES)
                 .then(response => {

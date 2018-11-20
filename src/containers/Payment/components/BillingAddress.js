@@ -14,22 +14,14 @@ class BillingAddress extends Component {
         onInputChange: PropTypes.func
     };
 
-    getCountries = name => {
-        const codeArray = [];
-        const { countriesCode } = this.props.billingAddress;
-        const countriesObj = countriesCode.getCountriesCode();
-        for (let key in countriesObj) {
-            if (countriesObj.hasOwnProperty(key)) {
-                codeArray.push(countriesObj[key][name]);
-            }
-        }
-        return codeArray;
-    };
-
     render() {
-        const { street, selectedCountry } = this.props.billingAddress;
-        const countries = this.getCountries('displayName');
-        const codes = this.getCountries('countryCode');
+        const {
+            street,
+            selectedCountry,
+            countriesCode
+        } = this.props.billingAddress;
+        const countries = countriesCode.getCountryDisplayName();
+        const codes = countriesCode.getCountriesCode();
         const { onInputChange } = this.props;
         return (
             <div className="addressCont">

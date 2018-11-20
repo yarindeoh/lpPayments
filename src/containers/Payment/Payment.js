@@ -4,7 +4,6 @@ import axios from 'axios';
 import MDSpinner from 'react-md-spinner';
 
 import liveperson from 'resources/images/liveperson.png';
-import { GET_COUNTRIES } from './PaymentConstants';
 import BillingAddress from './components/BillingAddress';
 import CreditCardInfo from './components/CreditCardInfo/CreditCardInfo';
 
@@ -48,9 +47,6 @@ class Payment extends React.Component {
         return this.props.store.payment.getServerData;
     };
 
-    componentDidMount() {
-        this.props.store.payment.getCountries();
-    }
     render() {
         const {
             billingAddress,

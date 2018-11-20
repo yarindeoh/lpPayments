@@ -10,7 +10,6 @@ module.exports = (env, argv) => {
 
     let webpackConfig = {
         performance: { hints: false },
-        mode: argv.mode,
         entry: path.resolve(__dirname, 'src/index.js'),
         devtool: argv.mode === 'development' ? 'eval-source-map' : 'none',
         resolve: {
