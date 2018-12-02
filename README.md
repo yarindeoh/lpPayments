@@ -55,3 +55,6 @@ The application allow users to insert their billing address and credit card info
 - prettier
 - Jest
 - Sass
+
+## MST branch - Technical stack
+same as above but using also MST (mobx-state-tree, and no jest)
